@@ -46,10 +46,18 @@ ap_geo <- ap %>%
             ave_passengers = mean(passengers))
 
 #Create New column that has full states names from abbreviation
-ap_geo$State_Name <- state.name[match(ap_geo$state,state.abb)]
+ap$State_Name <- state.name[match(ap$state,state.abb)]
+ap$hub_type <- factor(ap$hub_type, levels = c("Large", "Medium", "Small", "Nonhub"))
 
 #Create geo_faceted map 
-ggplot(na.omit(ap_geo), aes(year, passengers)) +
-  geom_line() +
+ggplot(na.omit(ap)) +
+  geom_point(aes(year, passengers, color = hub_type)) +
   facet_geo(~State_Name, grid = us_state_grid2) +
-  theme_bw()
+  theme_classic() +
+  labs(title = "Regional Airline Travel from 2012-2017",x = "Geographic Region", y = "Airline\nPassengers") +
+  scale_fill_manual("Hub Type",values=c("#0868ac", "#2ca25f", "#fd8d3c","lightgrey")) +
+  theme(axis.text.x = element_text(angle = 0, hjust = 1),
+        axis.title.y = element_text(angle = 0, vjust = 0.5),
+        plot.title = element_text(size = 20, face = "bold", hjust = 0.5),
+        legend.title=element_text(size=16), 
+        legend.text=element_text(size=12))
