@@ -37,7 +37,19 @@ ggplot(na.omit(ap_group)) +
 
 #Geo_Facet Example
 library(geofacet)
-ggplot(ap_group, aes(year, passengers)) +
-  geom_col() +
-  facet_geo(~state, grid = us_state_grid2) +
+ap_geo <- ap %>% 
+  group_by(state, year) %>%
+  summarize(rank = mean(yearly_rank),
+            rank_max = max(yearly_rank),
+            rank_min = min(yearly_rank),
+            passengers = sum(passengers),
+            ave_passengers = mean(passengers))
+
+#Create New column that has full states names from abbreviation
+ap_geo$State_Name <- state.name[match(ap_geo$state,state.abb)]
+
+#Create geo_faceted map 
+ggplot(na.omit(ap_geo), aes(year, passengers)) +
+  geom_line() +
+  facet_geo(~State_Name, grid = us_state_grid2) +
   theme_bw()
