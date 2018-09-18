@@ -35,4 +35,9 @@ ggplot(na.omit(ap_group)) +
         legend.title=element_text(size=16), 
         legend.text=element_text(size=12))
 
-
+#Geo_Facet Example
+library(geofacet)
+ggplot(ap_group, aes(year, passengers)) +
+  geom_col() +
+  facet_geo(~state, grid = us_state_grid2) +
+  theme_bw()
