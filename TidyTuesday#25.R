@@ -61,3 +61,5 @@ ggplot(na.omit(ap)) +
         plot.title = element_text(size = 20, face = "bold", hjust = 0.5),
         legend.title=element_text(size=16), 
         legend.text=element_text(size=12))
+
+edit
