@@ -13,26 +13,15 @@ View(df)
 str(df)
 
 #Create voter turnout percetage
-df$Turnout <- df$votes/df$eligible_voters
-df$region <- as.character(df$state)
-
-#Create Cartogram
-states <- map_data("state")
-voters_state <- sp::merge(states, df, by='region', all.x = TRUE)
-vs_sf = st_as_sf(voters_state)
-US_Cartogram = cartogram_cont(voters_state, "votes", maxSizeError = 1.5)
-plot(world_carto1["population"])
-
-#Create voter turnout percetage
-df$Turnout <- df$votes/df$eligible_voters
+df$Turnout <- (df$votes/df$eligible_voters) *100
 
 ggplot(df) +
-  geom_point(aes(year, Turnout), color = "#6495ED") +
-  geom_smooth(aes(year, Turnout), se = FALSE, color = "pink") + 
+  geom_point(aes(year, Turnout), color = "lightgrey") +
+  geom_smooth(aes(year, Turnout), se = FALSE, color = "#6495ED") + 
   facet_geo(~state, grid = us_state_grid2) +
   theme_classic() +
-  labs(title = "Voter Turnout ",
-       subtitle = "",
+  labs(title = "Tidy Tuesday #28",
+       subtitle = "United States Voter Turnout 1980-2014",
        x = "Year",
        y = "Voter Turnout\n(%)",
        caption = "Data from: data.world") +
