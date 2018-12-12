@@ -54,5 +54,6 @@ ggplot(na.omit(df_food), aes(x =cuisine_description, y = score, fill = grade)) +
   labs(title= "Mean Inspection Scores for Popular Cuisine Types\n in the Five New York City Boroughs", x = "Cuisine Description", y= "Inspection Score\n (Mean)") +
   theme_classic() +
   theme(axis.text.x=element_text(angle=90,hjust=1),
-        axis.title.y = element_text(angle=0,vjust = 0.5))
+        axis.title.y = element_text(angle=0,vjust = 0.5),
+        plot.title = element_text(hjust = 0.5))
 
